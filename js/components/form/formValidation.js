@@ -10,7 +10,8 @@ function formValidation() {
 		submit.addEventListener('click', event => {
 			event.preventDefault();
 			const validationResult = [];
-			
+			let validCount = 0;
+
 			for (let input of validatables) {
 				const rule = input.dataset.validation;
 				const text = input.value;
@@ -25,8 +26,18 @@ function formValidation() {
 					result = Validator.isValidMessage(text);
 				}
 				validationResult.push(result);
+				if (result === true) {
+					validCount++;
+				}
 			}
-			console.log(validationResult);
+
+			if (validCount === validatables.length) {
+				console.log('visi TRUE, siunciam info i serveri');
+			} else {
+				console.log('rastos klaidos');
+				console.log(validationResult);
+			}
+
 		})
 	}
 }

@@ -14,8 +14,12 @@ class Validator {
 
         return true;
     }
+
     static isValidEmail(email) {
         // ne tuscias tekstas
+        const notEmptyString = Validator.notEmptyString(email);
+        if (notEmptyString !== true) return notEmptyString;
+
         // ne trumpesnis nei 6 simboliai
         // tik 1 @ simbolis
         // pries @ turi buti nemaziau 1 simbolio
@@ -26,6 +30,7 @@ class Validator {
 
         return true;
     }
+
     static isValidMessage(message) {
         // ne tuscias tekstas
         // nevirsyti 1000 simboliu
@@ -44,6 +49,29 @@ class Validator {
     }
 
     static onlyAlphabet(text) {
+        const abc = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+        return Validator.onlyAllowedSymbols(text, abc);
+    }
+
+    static onlyNumbers(text) {
+        const abc = '1234567890';
+        return Validator.onlyAllowedSymbols(text, abc);
+    }
+
+    static onlyAllowedSymbols(text, allowedSymbols) {
+        for (let t of text) {
+            let singleAllowedTextSymbol = false;
+           for (let a of allowedSymbols) {
+               if (a === t) {
+                    singleAllowedTextSymbol = true;
+                    break;
+               }
+           } 
+           // jei bent viena text raide yra neleistina, tuomet radom kritine klaida
+           if (!singleAllowedTextSymbol) {
+                return `ERROR: rastas neleistinas "${t}" simbolis.`;
+           }
+        }
         return true;
     }
 
